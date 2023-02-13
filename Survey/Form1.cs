@@ -75,17 +75,15 @@ namespace Survey
         }
         private void Savebtn_Click(object sender, EventArgs e)
         {
-            FileHelper.WriteJsonHuman(person);
-            //fileHelper.WriteListBox(humanslistBox.Items.ToString());           
+            FileHelper.WriteJsonHuman(person);           
             Nametxtb.Text = "";
             Surnametxtb.Text = "";
             Emailtxtb.Text = "";
             Phonemaskedtxtb.Text = "";
             BirthdatetimePicker.Text = "";
         }
-
         private void Loadbtn_Click(object sender, EventArgs e)
-        {
+        { 
             try
             {
                 if (textBox3.Text == "")
@@ -102,10 +100,10 @@ namespace Survey
                     Changebtn.Location = Addbtn.Location;
                     Addbtn.Location = locationChange;
                 }
-                //if (textBox3.Text != "" && !textBox3.Text.Contains(".json"))
-                //{
-                //    textBox3.Text += ".json";
-                //}
+                if (textBox3.Text != "" && !textBox3.Text.Contains(".json"))
+                {
+                    textBox3.Text += ".json";
+                }
                 if (File.Exists(textBox3.Text))
                 {
                     person = fileHelper.ReadJsonHuman(textBox3.Text);
@@ -120,11 +118,6 @@ namespace Survey
             {
             }
         }
-        private void fgvreagvregregrewwg()
-        {
-
-        }
-        
         private void UserListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var human = UserListBox.SelectedItem as Person;
