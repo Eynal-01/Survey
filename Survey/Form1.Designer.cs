@@ -139,7 +139,6 @@
             this.Emailtxtb.Name = "Emailtxtb";
             this.Emailtxtb.Size = new System.Drawing.Size(206, 26);
             this.Emailtxtb.TabIndex = 5;
-            this.Emailtxtb.TextChanged += new System.EventHandler(this.Emailtxtb_TextChanged);
             // 
             // birthlbl
             // 
@@ -222,7 +221,6 @@
             this.Surnametxtb.Name = "Surnametxtb";
             this.Surnametxtb.Size = new System.Drawing.Size(208, 26);
             this.Surnametxtb.TabIndex = 2;
-            this.Surnametxtb.TextChanged += new System.EventHandler(this.Surnametxtb_TextChanged);
             // 
             // Nametxtb
             // 
@@ -231,16 +229,19 @@
             this.Nametxtb.Name = "Nametxtb";
             this.Nametxtb.Size = new System.Drawing.Size(208, 26);
             this.Nametxtb.TabIndex = 2;
-            this.Nametxtb.TextChanged += new System.EventHandler(this.Nametxtb_TextChanged);
             // 
             // UserListBox
             // 
             this.UserListBox.BackColor = System.Drawing.Color.DimGray;
+            this.UserListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.UserListBox.FormattingEnabled = true;
+            this.UserListBox.ItemHeight = 20;
             this.UserListBox.Location = new System.Drawing.Point(404, 24);
             this.UserListBox.Name = "UserListBox";
-            this.UserListBox.Size = new System.Drawing.Size(255, 316);
+            this.UserListBox.Size = new System.Drawing.Size(255, 304);
             this.UserListBox.TabIndex = 1;
+            this.UserListBox.SelectedIndexChanged += new System.EventHandler(this.UserListBox_SelectedIndexChanged);
+            this.UserListBox.DoubleClick += new System.EventHandler(this.UserListBox_DoubleClick);
             // 
             // textBox3
             // 
@@ -261,6 +262,7 @@
             this.Savebtn.TabIndex = 3;
             this.Savebtn.Text = "Save";
             this.Savebtn.UseVisualStyleBackColor = false;
+            this.Savebtn.Click += new System.EventHandler(this.Savebtn_Click);
             // 
             // Loadbtn
             // 
@@ -288,7 +290,6 @@
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "SURVEY";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.SurveygroupBox1.ResumeLayout(false);
             this.SurveygroupBox1.PerformLayout();
             this.ResumeLayout(false);
