@@ -166,7 +166,6 @@
 
         private System.Windows.Forms.GroupBox SurveygroupBox1;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ListBox UserListBox;
         private System.Windows.Forms.TextBox textBox3;
