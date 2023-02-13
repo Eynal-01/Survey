@@ -213,6 +213,7 @@
             this.Changebtn.TabIndex = 3;
             this.Changebtn.Text = "Change";
             this.Changebtn.UseVisualStyleBackColor = false;
+            this.Changebtn.Click += new System.EventHandler(this.Changebtn_Click);
             // 
             // Surnametxtb
             // 

@@ -132,6 +132,11 @@ namespace Survey
             var human = UserListBox.SelectedItem as Person;
             textBox3.Text = human.Name + ".json";
         }
+
+        private void Changebtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
     public class Person
     {
