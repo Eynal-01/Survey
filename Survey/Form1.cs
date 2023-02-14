@@ -61,7 +61,7 @@ namespace Survey
                 Name = Nametxtb.Text,
                 Surname = Surnametxtb.Text,
                 Email = Emailtxtb.Text,
-                Phone=Phonemaskedtxtb.Text,
+                Phone = Phonemaskedtxtb.Text,
                 BirthDate = BirthdatetimePicker.Text
             };
             UserListBox.Items.Add(newperson);
@@ -75,7 +75,7 @@ namespace Survey
         }
         private void Savebtn_Click(object sender, EventArgs e)
         {
-            FileHelper.WriteJsonHuman(person);           
+            FileHelper.WriteJsonHuman(person);
             Nametxtb.Text = "";
             Surnametxtb.Text = "";
             Emailtxtb.Text = "";
@@ -83,7 +83,7 @@ namespace Survey
             BirthdatetimePicker.Text = "";
         }
         private void Loadbtn_Click(object sender, EventArgs e)
-        { 
+        {
             try
             {
                 if (textBox3.Text == "")
@@ -104,14 +104,14 @@ namespace Survey
                 {
                     textBox3.Text += ".json";
                 }
-                if (File.Exists(textBox3.Text))
+                var human = UserListBox.SelectedItem as Person;
+                if (textBox3.Text == human.Name + ".json")
                 {
-                    person = fileHelper.ReadJsonHuman(textBox3.Text);
-                    Nametxtb.Text = person.Name;
-                    Surnametxtb.Text = person.Surname;
-                    Emailtxtb.Text = person.Email;
-                    Phonemaskedtxtb.Text = person.Phone;
-                    BirthdatetimePicker.Text = person.BirthDate.ToString();
+                    Nametxtb.Text = human.Name;
+                    Surnametxtb.Text = human.Surname;
+                    Emailtxtb.Text = human.Email;
+                    Phonemaskedtxtb.Text = human.Phone;
+                    BirthdatetimePicker.Text = human.BirthDate;
                 }
             }
             catch
@@ -135,7 +135,13 @@ namespace Survey
 
         private void Changebtn_Click(object sender, EventArgs e)
         {
-
+            var person = UserListBox.SelectedItem as Person;
+            person.Name = Nametxtb.Text;
+            person.Surname = Surnametxtb.Text;
+            person.Email = Emailtxtb.Text    ;
+            person.Phone = Phonemaskedtxtb.Text;
+            person.BirthDate = BirthdatetimePicker.Text;
+            FileHelper.WriteJsonHuman(person);
         }
     }
     public class Person
@@ -166,16 +172,16 @@ namespace Survey
         }
         public Person ReadJsonHuman(string text)
         {
-            Person employers = null;
+            Person person = new Person();
             var serializer1 = new JsonSerializer();
             using (var sr1 = new StreamReader(".json"))
             {
                 using (var jr1 = new JsonTextReader(sr1))
                 {
-                    employers = serializer1.Deserialize<Person>(jr1);
+                    person = serializer1.Deserialize<Person>(jr1);
                 }
             }
-            return employers;
+            return person;
         }
     }
 }
