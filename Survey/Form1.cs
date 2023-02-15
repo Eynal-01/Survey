@@ -18,8 +18,9 @@ namespace Survey
 {
     public partial class Form1 : Form
     {
+        List<Person> humans = new List<Person>();
+        Person user = new Person();
         Person person = new Person();
-        List<Person> persons = new List<Person>();
         List<Person> GetAllPersons()
         {
             List<Person> persons = new List<Person>();
@@ -49,28 +50,37 @@ namespace Survey
                 e.Graphics.FillRectangle(brush, this.ClientRectangle);
             }
         }
-
         private void Addbtn_Click(object sender, EventArgs e)
         {
+            var newperson = new Person();
             var locationChange = Changebtn.Location;
             Changebtn.Location = Addbtn.Location;
             Addbtn.Location = locationChange;
             this.BackColor = Color.Green;
-            Person newperson = new Person
-            {
-                Name = Nametxtb.Text,
-                Surname = Surnametxtb.Text,
-                Email = Emailtxtb.Text,
-                Phone = Phonemaskedtxtb.Text,
-                BirthDate = BirthdatetimePicker.Text
-            };
-            UserListBox.Items.Add(newperson);
+
+            newperson.Name = Nametxtb.Text;
+            newperson.FileName = newperson.Name;
+            newperson.Surname = Surnametxtb.Text;
+            newperson.Email = Emailtxtb.Text;
+            newperson.Phone = Phonemaskedtxtb.Text;
+            newperson.BirthDate = BirthdatetimePicker.Text;
+
+
             UserListBox.DisplayMember = nameof(Person.Name);
-            FileHelper.WriteJsonHuman(newperson);
+            textBox3.Text = newperson.FileName;
+            if (!UserListBox.Items.Equals(person.Id))
+            {
+                UserListBox.Items.Add(newperson);
+            }
+
+            if (!textBox3.Text.Contains(".json"))
+            {
+                textBox3.Text = newperson.FileName;
+            }
         }
         private void Savebtn_Click(object sender, EventArgs e)
         {
-            FileHelper.WriteJsonHuman(person);
+            fileHelper.Write(person);
             Nametxtb.Text = "";
             Surnametxtb.Text = "";
             Emailtxtb.Text = "";
@@ -88,7 +98,7 @@ namespace Survey
                     UserListBox.Items.AddRange(persons.ToArray());
                     UserListBox.DisplayMember = nameof(Person.Name);
                 }
-                var path = Directory.GetCurrentDirectory() + textBox3.Text;
+                var path = Directory.GetCurrentDirectory() + "\\" + textBox3.Text;
                 if (File.Exists(path) || File.Exists(path + ".json"))
                 {
                     var locationChange = Changebtn.Location;
@@ -99,16 +109,14 @@ namespace Survey
                 {
                     textBox3.Text += ".json";
                 }
-                foreach (var item in GetAllPersons())
+                if (File.Exists(textBox3.Text))
                 {
-                    if (textBox3.Text == item.FileName)
-                    {
-                        Nametxtb.Text = item.Name;
-                        Surnametxtb.Text = item.Surname;
-                        Emailtxtb.Text = item.Email;
-                        Phonemaskedtxtb.Text = item.Phone;
-                        BirthdatetimePicker.Text = item.BirthDate;
-                    }
+                    user = fileHelper.Read(textBox3.Text);
+                    Nametxtb.Text = user.Name;
+                    Surnametxtb.Text = user.Surname;
+                    Emailtxtb.Text = user.Email;
+                    Phonemaskedtxtb.Text = user.Phone;
+                    BirthdatetimePicker.Text = user.BirthDate.ToString();
                 }
             }
             catch
@@ -118,6 +126,7 @@ namespace Survey
         private void UserListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var human = UserListBox.SelectedItem as Person;
+            textBox3.Text = human.FileName;
             Nametxtb.Text = human.Name;
             Surnametxtb.Text = human.Surname;
             Emailtxtb.Text = human.Email;
@@ -131,54 +140,93 @@ namespace Survey
         }
         private void Changebtn_Click(object sender, EventArgs e)
         {
-            var person = UserListBox.SelectedItem as Person;
-            person.Name = Nametxtb.Text;
-            person.Surname = Surnametxtb.Text;
-            person.Email = Emailtxtb.Text;
-            person.Phone = Phonemaskedtxtb.Text;
-            person.BirthDate = BirthdatetimePicker.Text;
-            FileHelper.WriteJsonHuman(person);
+
+            textBox3.Text = user.FileName + ".json";
+            if (Nametxtb.Text != user.Name)
+            {
+                user.Name = Nametxtb.Text;
+            }
+            if (person.Name != user.Name)
+            {
+                person.FileName = user.FileName;
+            }
+            else
+            {
+                textBox3.Text = user.FileName + ".json";
+            }
+            if (Surnametxtb.Text != user.Surname)
+            {
+                user.Surname = Surnametxtb.Text;
+            }
+            if (Emailtxtb.Text != user.Email)
+            {
+                user.Email = Emailtxtb.Text;
+            }
+            if (Phonemaskedtxtb.Text != user.Phone)
+            {
+                user.Phone = Phonemaskedtxtb.Text;
+            }
+            if (BirthdatetimePicker.Text != user.BirthDate.ToString())
+            {
+                user.BirthDate = BirthdatetimePicker.Text;
+            }
+            person = user;
+            fileHelper.Write(person);
         }
     }
     public class Person
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString().Substring(0, 8);
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
         public string BirthDate { get; set; }
         public string Phone { get; set; }
-        public string FileName { get; set; } = $"{nameof(Name)}.json";
-        //public override string ToString()
-        //{
-        //    return $"{Name}-{Surname}-{Email}-{Phone}-{BirthDate}";
-        //}
+        public string FileName { get; set; }
+        public override string ToString()
+        {
+            return $"{Name}-{Surname}-{Email}-{Phone}-{BirthDate}";
+        }
     }
     public class FileHelper
     {
-        public static void WriteJsonHuman(Person person)
+        public void Write(Person newperson)
         {
             var serializer = new JsonSerializer();
-            using (var sw = new StreamWriter($"{person.Name}.json"))
+            using (var sw = new StreamWriter(newperson.FileName + ".json"))
             {
                 using (var jw = new JsonTextWriter(sw))
                 {
                     jw.Formatting = Newtonsoft.Json.Formatting.Indented;
-                    serializer.Serialize(jw, person);
+                    serializer.Serialize(jw, newperson);
                 }
             }
         }
-        public Person ReadJsonHuman(string text)
+        public Person Read(string filename)
         {
             Person person = new Person();
-            var serializer1 = new JsonSerializer();
-            using (var sr1 = new StreamReader(".json"))
+            try
             {
-                using (var jr1 = new JsonTextReader(sr1))
-                {
-                    person = serializer1.Deserialize<Person>(jr1);
-                }
+                var context = File.ReadAllText(filename);
+                person = JsonConvert.DeserializeObject<Person>(context);
+            }
+            catch (Exception)
+            {
+
             }
             return person;
+        }
+        public void WriteListBox(ListBox.ObjectCollection humans)
+        {
+            var serializer = new JsonSerializer();
+            using (var sw = new StreamWriter("humans.json"))
+            {
+                using (var jw = new JsonTextWriter(sw))
+                {
+                    jw.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    serializer.Serialize(jw, humans);
+                }
+            }
         }
     }
 }
