@@ -49,12 +49,13 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.Savebtn = new System.Windows.Forms.Button();
             this.Loadbtn = new System.Windows.Forms.Button();
+            this.ExitBtn = new System.Windows.Forms.Button();
             this.SurveygroupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // SurveygroupBox1
             // 
-            this.SurveygroupBox1.BackColor = System.Drawing.Color.DimGray;
+            this.SurveygroupBox1.BackColor = System.Drawing.Color.LightSeaGreen;
             this.SurveygroupBox1.Controls.Add(this.emailchecklbl);
             this.SurveygroupBox1.Controls.Add(this.phonechecklbl);
             this.SurveygroupBox1.Controls.Add(this.surnamechecklbl);
@@ -127,7 +128,7 @@
             // 
             this.Phonemaskedtxtb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Phonemaskedtxtb.Location = new System.Drawing.Point(111, 142);
-            this.Phonemaskedtxtb.Mask = "(999) 00-000-00-00";
+            this.Phonemaskedtxtb.Mask = "+(994) 00-000-00-00";
             this.Phonemaskedtxtb.Name = "Phonemaskedtxtb";
             this.Phonemaskedtxtb.Size = new System.Drawing.Size(208, 26);
             this.Phonemaskedtxtb.TabIndex = 6;
@@ -193,7 +194,7 @@
             // 
             // Addbtn
             // 
-            this.Addbtn.BackColor = System.Drawing.Color.DimGray;
+            this.Addbtn.BackColor = System.Drawing.Color.Teal;
             this.Addbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Addbtn.Location = new System.Drawing.Point(243, 356);
             this.Addbtn.Name = "Addbtn";
@@ -201,11 +202,10 @@
             this.Addbtn.TabIndex = 3;
             this.Addbtn.Text = "Add";
             this.Addbtn.UseVisualStyleBackColor = false;
-            this.Addbtn.Click += new System.EventHandler(this.Addbtn_Click);
             // 
             // Changebtn
             // 
-            this.Changebtn.BackColor = System.Drawing.Color.DimGray;
+            this.Changebtn.BackColor = System.Drawing.Color.Teal;
             this.Changebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Changebtn.Location = new System.Drawing.Point(245, 316);
             this.Changebtn.Name = "Changebtn";
@@ -213,7 +213,6 @@
             this.Changebtn.TabIndex = 3;
             this.Changebtn.Text = "Change";
             this.Changebtn.UseVisualStyleBackColor = false;
-            this.Changebtn.Click += new System.EventHandler(this.Changebtn_Click);
             // 
             // Surnametxtb
             // 
@@ -233,20 +232,18 @@
             // 
             // UserListBox
             // 
-            this.UserListBox.BackColor = System.Drawing.Color.DimGray;
+            this.UserListBox.BackColor = System.Drawing.Color.LightSeaGreen;
             this.UserListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.UserListBox.FormattingEnabled = true;
             this.UserListBox.ItemHeight = 20;
-            this.UserListBox.Location = new System.Drawing.Point(404, 24);
+            this.UserListBox.Location = new System.Drawing.Point(404, 33);
             this.UserListBox.Name = "UserListBox";
             this.UserListBox.Size = new System.Drawing.Size(255, 304);
             this.UserListBox.TabIndex = 1;
-            this.UserListBox.SelectedIndexChanged += new System.EventHandler(this.UserListBox_SelectedIndexChanged);
-            this.UserListBox.DoubleClick += new System.EventHandler(this.UserListBox_DoubleClick);
             // 
             // textBox3
             // 
-            this.textBox3.BackColor = System.Drawing.Color.DimGray;
+            this.textBox3.BackColor = System.Drawing.Color.White;
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox3.Location = new System.Drawing.Point(404, 356);
             this.textBox3.Name = "textBox3";
@@ -255,7 +252,7 @@
             // 
             // Savebtn
             // 
-            this.Savebtn.BackColor = System.Drawing.Color.DimGray;
+            this.Savebtn.BackColor = System.Drawing.Color.LightSeaGreen;
             this.Savebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Savebtn.Location = new System.Drawing.Point(537, 396);
             this.Savebtn.Name = "Savebtn";
@@ -263,11 +260,10 @@
             this.Savebtn.TabIndex = 3;
             this.Savebtn.Text = "Save";
             this.Savebtn.UseVisualStyleBackColor = false;
-            this.Savebtn.Click += new System.EventHandler(this.Savebtn_Click);
             // 
             // Loadbtn
             // 
-            this.Loadbtn.BackColor = System.Drawing.Color.DimGray;
+            this.Loadbtn.BackColor = System.Drawing.Color.LightSeaGreen;
             this.Loadbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Loadbtn.Location = new System.Drawing.Point(404, 396);
             this.Loadbtn.Name = "Loadbtn";
@@ -276,11 +272,28 @@
             this.Loadbtn.Text = "Load";
             this.Loadbtn.UseVisualStyleBackColor = false;
             // 
+            // ExitBtn
+            // 
+            this.ExitBtn.BackColor = System.Drawing.Color.Silver;
+            this.ExitBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ExitBtn.Location = new System.Drawing.Point(647, 4);
+            this.ExitBtn.Name = "ExitBtn";
+            this.ExitBtn.Size = new System.Drawing.Size(24, 23);
+            this.ExitBtn.TabIndex = 4;
+            this.ExitBtn.Text = "X";
+            this.ExitBtn.UseVisualStyleBackColor = false;
+            this.ExitBtn.Click += new System.EventHandler(this.ExitBtn_Click_1);
+            this.ExitBtn.MouseEnter += new System.EventHandler(this.ExitBtn_MouseEnter);
+            this.ExitBtn.MouseLeave += new System.EventHandler(this.ExitBtn_MouseLeave);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Teal;
             this.ClientSize = new System.Drawing.Size(675, 450);
+            this.ControlBox = false;
+            this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.Loadbtn);
             this.Controls.Add(this.Savebtn);
             this.Controls.Add(this.textBox3);
@@ -290,6 +303,7 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SURVEY";
             this.SurveygroupBox1.ResumeLayout(false);
             this.SurveygroupBox1.PerformLayout();
@@ -321,6 +335,7 @@
         private System.Windows.Forms.Label phonechecklbl;
         private System.Windows.Forms.Label surnamechecklbl;
         private System.Windows.Forms.Label namechecklbl;
+        private System.Windows.Forms.Button ExitBtn;
     }
 }
 

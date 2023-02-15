@@ -4,15 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace Survey
 {
@@ -35,59 +31,49 @@ namespace Survey
             }
             return persons;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();                      
         }
         FileHelper fileHelper = new FileHelper();
-        protected override void OnPaintBackground(PaintEventArgs e)
+        private void addBtn_Click(object sender, EventArgs e)
         {
-            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle,
-                                                                  Color.DimGray,
-                                                                  Color.Black,
-                                                                  90F))
-            {
-                e.Graphics.FillRectangle(brush, this.ClientRectangle);
-            }
-        }
-        private void Addbtn_Click(object sender, EventArgs e)
-        {
-            var newperson = new Person();
-            var locationChange = Changebtn.Location;
-            Changebtn.Location = Addbtn.Location;
-            Addbtn.Location = locationChange;
-            this.BackColor = Color.Green;
-
-            newperson.Name = Nametxtb.Text;
-            newperson.FileName = newperson.Name;
-            newperson.Surname = Surnametxtb.Text;
-            newperson.Email = Emailtxtb.Text;
-            newperson.Phone = Phonemaskedtxtb.Text;
-            newperson.BirthDate = BirthdatetimePicker.Text;
-
-
+            person = new Person();
+            person.Name = Nametxtb.Text;
+            person.Filename = person.Name;
+            person.Surname = Surnametxtb.Text;
+            person.Email = Emailtxtb.Text;
+            person.Number = Phonemaskedtxtb.Text;
+            person.Birthdate = BirthdatetimePicker.Value;
             UserListBox.DisplayMember = nameof(Person.Name);
-            textBox3.Text = newperson.FileName;
+            textBox3.Text = person.Filename + ".json";
             if (!UserListBox.Items.Equals(person.Id))
             {
-                UserListBox.Items.Add(newperson);
+                UserListBox.Items.Add(person);
             }
 
             if (!textBox3.Text.Contains(".json"))
             {
-                textBox3.Text = newperson.FileName;
+                textBox3.Text = person.Filename + ".json";
             }
         }
-        private void Savebtn_Click(object sender, EventArgs e)
+        private void saveBtn_Click(object sender, EventArgs e)
         {
             fileHelper.Write(person);
+            var templocation1 = Changebtn.Location;
+            Changebtn.Location = Addbtn.Location;
+            Addbtn.Location = templocation1;
             Nametxtb.Text = "";
             Surnametxtb.Text = "";
             Emailtxtb.Text = "";
             Phonemaskedtxtb.Text = "";
             BirthdatetimePicker.Text = "";
+            textBox3.Text = "";
         }
-        private void Loadbtn_Click(object sender, EventArgs e)
+        private void loadBtn_Click(object sender, EventArgs e)
         {
             try
             {
@@ -101,9 +87,9 @@ namespace Survey
                 var path = Directory.GetCurrentDirectory() + "\\" + textBox3.Text;
                 if (File.Exists(path) || File.Exists(path + ".json"))
                 {
-                    var locationChange = Changebtn.Location;
-                    Changebtn.Location = Addbtn.Location;
-                    Addbtn.Location = locationChange;
+                    var templocation = Addbtn.Location;
+                    Addbtn.Location = Changebtn.Location;
+                    Changebtn.Location = templocation;
                 }
                 if (textBox3.Text != "" && !textBox3.Text.Contains(".json"))
                 {
@@ -115,44 +101,28 @@ namespace Survey
                     Nametxtb.Text = user.Name;
                     Surnametxtb.Text = user.Surname;
                     Emailtxtb.Text = user.Email;
-                    Phonemaskedtxtb.Text = user.Phone;
-                    BirthdatetimePicker.Text = user.BirthDate.ToString();
+                    Phonemaskedtxtb.Text = user.Number;
+                    BirthdatetimePicker.Text = user.Birthdate.ToString();
                 }
             }
             catch
             {
             }
         }
-        private void UserListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void changeBtn_Click(object sender, EventArgs e)
         {
-            var human = UserListBox.SelectedItem as Person;
-            textBox3.Text = human.FileName;
-            Nametxtb.Text = human.Name;
-            Surnametxtb.Text = human.Surname;
-            Emailtxtb.Text = human.Email;
-            Phonemaskedtxtb.Text = human.Phone;
-            BirthdatetimePicker.Text = human.BirthDate;
-        }
-        private void UserListBox_DoubleClick(object sender, EventArgs e)
-        {
-            var human = UserListBox.SelectedItem as Person;
-            textBox3.Text = human.Name + ".json";
-        }
-        private void Changebtn_Click(object sender, EventArgs e)
-        {
-
-            textBox3.Text = user.FileName + ".json";
+            textBox3.Text = user.Filename + ".json";
             if (Nametxtb.Text != user.Name)
             {
                 user.Name = Nametxtb.Text;
             }
             if (person.Name != user.Name)
             {
-                person.FileName = user.FileName;
+                person.Filename = user.Filename;
             }
             else
             {
-                textBox3.Text = user.FileName + ".json";
+                textBox3.Text = user.Filename + ".json";
             }
             if (Surnametxtb.Text != user.Surname)
             {
@@ -162,71 +132,52 @@ namespace Survey
             {
                 user.Email = Emailtxtb.Text;
             }
-            if (Phonemaskedtxtb.Text != user.Phone)
+            if (Phonemaskedtxtb.Text != user.Number)
             {
-                user.Phone = Phonemaskedtxtb.Text;
+                user.Number = Phonemaskedtxtb.ToString();
             }
-            if (BirthdatetimePicker.Text != user.BirthDate.ToString())
+            if (BirthdatetimePicker.Text != user.Birthdate.ToString())
             {
-                user.BirthDate = BirthdatetimePicker.Text;
+                user.Birthdate = BirthdatetimePicker.Value;
             }
             person = user;
             fileHelper.Write(person);
         }
-    }
-    public class Person
-    {
-        public string Id { get; set; } = Guid.NewGuid().ToString().Substring(0, 8);
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public string BirthDate { get; set; }
-        public string Phone { get; set; }
-        public string FileName { get; set; }
-        public override string ToString()
+        private void exitBtn_Click(object sender, EventArgs e)
         {
-            return $"{Name}-{Surname}-{Email}-{Phone}-{BirthDate}";
+            Application.Exit();
         }
-    }
-    public class FileHelper
-    {
-        public void Write(Person newperson)
+        private void humanslistBox_DoubleClick(object sender, EventArgs e)
         {
-            var serializer = new JsonSerializer();
-            using (var sw = new StreamWriter(newperson.FileName + ".json"))
-            {
-                using (var jw = new JsonTextWriter(sw))
-                {
-                    jw.Formatting = Newtonsoft.Json.Formatting.Indented;
-                    serializer.Serialize(jw, newperson);
-                }
-            }
+            var human = UserListBox.SelectedItem as Person;
+            textBox3.Text = human.Filename;
         }
-        public Person Read(string filename)
+        private void humanslistBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Person person = new Person();
-            try
-            {
-                var context = File.ReadAllText(filename);
-                person = JsonConvert.DeserializeObject<Person>(context);
-            }
-            catch (Exception)
-            {
+            var human = UserListBox.SelectedItem as Person;
+            textBox3.Text = human.Filename;
 
-            }
-            return person;
+            Nametxtb.Text = human.Name;
+            Surnametxtb.Text = human.Surname;
+            Emailtxtb.Text = human.Email;
+            Phonemaskedtxtb.Text = human.Number;
+            BirthdatetimePicker.Text = human.Birthdate.ToString();
         }
-        public void WriteListBox(ListBox.ObjectCollection humans)
+        private void nameTxb_TextChanged(object sender, EventArgs e)
         {
-            var serializer = new JsonSerializer();
-            using (var sw = new StreamWriter("humans.json"))
-            {
-                using (var jw = new JsonTextWriter(sw))
-                {
-                    jw.Formatting = Newtonsoft.Json.Formatting.Indented;
-                    serializer.Serialize(jw, humans);
-                }
-            }
+            person.Filename = person.Name;
+        }
+        private void ExitBtn_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        private void ExitBtn_MouseEnter(object sender, EventArgs e)
+        {
+            ExitBtn.BackColor = Color.Red;
+        }
+        private void ExitBtn_MouseLeave(object sender, EventArgs e)
+        {
+            ExitBtn.BackColor = Color.Silver;
         }
     }
 }
