@@ -36,18 +36,18 @@ namespace Survey
         /// </summary>
         public Form1()
         {
-            InitializeComponent();                      
+            InitializeComponent();
         }
         FileHelper fileHelper = new FileHelper();
-        private void addBtn_Click(object sender, EventArgs e)
+        private void Addbtn_Click(object sender, EventArgs e)
         {
             person = new Person();
             person.Name = Nametxtb.Text;
             person.Filename = person.Name;
             person.Surname = Surnametxtb.Text;
             person.Email = Emailtxtb.Text;
-            person.Number = Phonemaskedtxtb.Text;
-            person.Birthdate = BirthdatetimePicker.Value;
+            person.Number = Phonemaskedtxtb.Text.ToString();
+            person.Birthdate = BirthdatetimePicker.Value.ToString();
             UserListBox.DisplayMember = nameof(Person.Name);
             textBox3.Text = person.Filename + ".json";
             if (!UserListBox.Items.Equals(person.Id))
@@ -60,7 +60,7 @@ namespace Survey
                 textBox3.Text = person.Filename + ".json";
             }
         }
-        private void saveBtn_Click(object sender, EventArgs e)
+        private void Savebtn_Click(object sender, EventArgs e)
         {
             fileHelper.Write(person);
             var templocation1 = Changebtn.Location;
@@ -73,7 +73,7 @@ namespace Survey
             BirthdatetimePicker.Text = "";
             textBox3.Text = "";
         }
-        private void loadBtn_Click(object sender, EventArgs e)
+        private void Loadbtn_Click(object sender, EventArgs e)
         {
             try
             {
@@ -109,50 +109,56 @@ namespace Survey
             {
             }
         }
-        private void changeBtn_Click(object sender, EventArgs e)
+        private void Changebtn_Click(object sender, EventArgs e)
         {
-            textBox3.Text = user.Filename + ".json";
-            if (Nametxtb.Text != user.Name)
-            {
-                user.Name = Nametxtb.Text;
-            }
-            if (person.Name != user.Name)
-            {
-                person.Filename = user.Filename;
-            }
-            else
+            try
             {
                 textBox3.Text = user.Filename + ".json";
+                if (Nametxtb.Text != user.Name)
+                {
+                    user.Name = Nametxtb.Text;
+                }
+                if (person.Name != user.Name)
+                {
+                    person.Filename = user.Filename;
+                }
+                else
+                {
+                    textBox3.Text = user.Filename + ".json";
+                }
+                if (Surnametxtb.Text != user.Surname)
+                {
+                    user.Surname = Surnametxtb.Text;
+                }
+                if (Emailtxtb.Text != user.Email)
+                {
+                    user.Email = Emailtxtb.Text;
+                }
+                if (Phonemaskedtxtb.Text != user.Number)
+                {
+                    user.Number = Phonemaskedtxtb.ToString();
+                }
+                if (BirthdatetimePicker.Text != user.Birthdate.ToString())
+                {
+                    user.Birthdate = BirthdatetimePicker.Value.ToString();
+                }
+                person = user;
+                fileHelper.Write(person);
             }
-            if (Surnametxtb.Text != user.Surname)
+            catch (Exception)
             {
-                user.Surname = Surnametxtb.Text;
-            }
-            if (Emailtxtb.Text != user.Email)
-            {
-                user.Email = Emailtxtb.Text;
-            }
-            if (Phonemaskedtxtb.Text != user.Number)
-            {
-                user.Number = Phonemaskedtxtb.ToString();
-            }
-            if (BirthdatetimePicker.Text != user.Birthdate.ToString())
-            {
-                user.Birthdate = BirthdatetimePicker.Value;
-            }
-            person = user;
-            fileHelper.Write(person);
+            }   
         }
-        private void exitBtn_Click(object sender, EventArgs e)
+        private void Exitbtn_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        private void humanslistBox_DoubleClick(object sender, EventArgs e)
+        private void UserlistBox_DoubleClick(object sender, EventArgs e)
         {
             var human = UserListBox.SelectedItem as Person;
             textBox3.Text = human.Filename;
         }
-        private void humanslistBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void UserlistBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var human = UserListBox.SelectedItem as Person;
             textBox3.Text = human.Filename;
@@ -163,7 +169,7 @@ namespace Survey
             Phonemaskedtxtb.Text = human.Number;
             BirthdatetimePicker.Text = human.Birthdate.ToString();
         }
-        private void nameTxb_TextChanged(object sender, EventArgs e)
+        private void Nametxtb_TextChanged(object sender, EventArgs e)
         {
             person.Filename = person.Name;
         }

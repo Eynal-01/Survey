@@ -13,7 +13,7 @@ namespace Survey
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Number { get; set; }
-        public DateTime Birthdate { get; set; }
+        public string Birthdate { get; set; }
         public string Filename { get; set; }
 
         public override string ToString()

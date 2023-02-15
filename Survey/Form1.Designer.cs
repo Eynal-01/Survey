@@ -202,6 +202,7 @@
             this.Addbtn.TabIndex = 3;
             this.Addbtn.Text = "Add";
             this.Addbtn.UseVisualStyleBackColor = false;
+            this.Addbtn.Click += new System.EventHandler(this.Addbtn_Click);
             // 
             // Changebtn
             // 
@@ -213,6 +214,7 @@
             this.Changebtn.TabIndex = 3;
             this.Changebtn.Text = "Change";
             this.Changebtn.UseVisualStyleBackColor = false;
+            this.Changebtn.Click += new System.EventHandler(this.Changebtn_Click);
             // 
             // Surnametxtb
             // 
@@ -229,6 +231,7 @@
             this.Nametxtb.Name = "Nametxtb";
             this.Nametxtb.Size = new System.Drawing.Size(208, 26);
             this.Nametxtb.TabIndex = 2;
+            this.Nametxtb.TextChanged += new System.EventHandler(this.Nametxtb_TextChanged);
             // 
             // UserListBox
             // 
@@ -240,6 +243,8 @@
             this.UserListBox.Name = "UserListBox";
             this.UserListBox.Size = new System.Drawing.Size(255, 304);
             this.UserListBox.TabIndex = 1;
+            this.UserListBox.SelectedIndexChanged += new System.EventHandler(this.UserlistBox_SelectedIndexChanged);
+            this.UserListBox.DoubleClick += new System.EventHandler(this.UserlistBox_DoubleClick);
             // 
             // textBox3
             // 
@@ -260,6 +265,7 @@
             this.Savebtn.TabIndex = 3;
             this.Savebtn.Text = "Save";
             this.Savebtn.UseVisualStyleBackColor = false;
+            this.Savebtn.Click += new System.EventHandler(this.Savebtn_Click);
             // 
             // Loadbtn
             // 
@@ -271,6 +277,7 @@
             this.Loadbtn.TabIndex = 3;
             this.Loadbtn.Text = "Load";
             this.Loadbtn.UseVisualStyleBackColor = false;
+            this.Loadbtn.Click += new System.EventHandler(this.Loadbtn_Click);
             // 
             // ExitBtn
             // 
@@ -299,6 +306,7 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.UserListBox);
             this.Controls.Add(this.SurveygroupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
