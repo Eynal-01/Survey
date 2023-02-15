@@ -65,11 +65,6 @@ namespace Survey
                 BirthDate = BirthdatetimePicker.Text
             };
             UserListBox.Items.Add(newperson);
-            textBox3.Text = person.Name + ".json";
-            if (!textBox3.Text.Contains(".json"))
-            {
-                textBox3.Text = person.Name + ".json";
-            }
             UserListBox.DisplayMember = nameof(Person.Name);
             FileHelper.WriteJsonHuman(newperson);
         }
@@ -93,7 +88,7 @@ namespace Survey
                     UserListBox.Items.AddRange(persons.ToArray());
                     UserListBox.DisplayMember = nameof(Person.Name);
                 }
-                var path = Directory.GetCurrentDirectory() + "\\" + textBox3.Text;
+                var path = Directory.GetCurrentDirectory() + textBox3.Text;
                 if (File.Exists(path) || File.Exists(path + ".json"))
                 {
                     var locationChange = Changebtn.Location;
@@ -104,14 +99,16 @@ namespace Survey
                 {
                     textBox3.Text += ".json";
                 }
-                var human = UserListBox.SelectedItem as Person;
-                if (textBox3.Text == human.Name + ".json")
+                foreach (var item in GetAllPersons())
                 {
-                    Nametxtb.Text = human.Name;
-                    Surnametxtb.Text = human.Surname;
-                    Emailtxtb.Text = human.Email;
-                    Phonemaskedtxtb.Text = human.Phone;
-                    BirthdatetimePicker.Text = human.BirthDate;
+                    if (textBox3.Text == item.FileName)
+                    {
+                        Nametxtb.Text = item.Name;
+                        Surnametxtb.Text = item.Surname;
+                        Emailtxtb.Text = item.Email;
+                        Phonemaskedtxtb.Text = item.Phone;
+                        BirthdatetimePicker.Text = item.BirthDate;
+                    }
                 }
             }
             catch
@@ -132,13 +129,12 @@ namespace Survey
             var human = UserListBox.SelectedItem as Person;
             textBox3.Text = human.Name + ".json";
         }
-
         private void Changebtn_Click(object sender, EventArgs e)
         {
             var person = UserListBox.SelectedItem as Person;
             person.Name = Nametxtb.Text;
             person.Surname = Surnametxtb.Text;
-            person.Email = Emailtxtb.Text    ;
+            person.Email = Emailtxtb.Text;
             person.Phone = Phonemaskedtxtb.Text;
             person.BirthDate = BirthdatetimePicker.Text;
             FileHelper.WriteJsonHuman(person);
@@ -151,6 +147,7 @@ namespace Survey
         public string Email { get; set; }
         public string BirthDate { get; set; }
         public string Phone { get; set; }
+        public string FileName { get; set; } = $"{nameof(Name)}.json";
         //public override string ToString()
         //{
         //    return $"{Name}-{Surname}-{Email}-{Phone}-{BirthDate}";
